@@ -1,20 +1,15 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Chat Rooms</title>
-    </head>
-    <body>
-        <h1>Chat Rooms</h1>
-        <!-- Add a button to create a new chat room -->
-        <a href="{% url 'create_room' %}">
-            <button>Create Room</button>
-        </a>
-        <ul>
-            {% for room in rooms %}
-                <li>
-                    <a href="{% url 'chat_room' room.id %}">{{ room.name }}</a>
-                </li>
-            {% endfor %}
-        </ul>
-    </body>
-</html>
+{% extends 'base.html' %}
+{% block title %}Chat Rooms{% endblock %}
+{% block content %}
+    <h1>Chat Rooms</h1>
+    <a href="{% url 'create_room' %}">
+        <button>Create Room</button>
+    </a>
+    <ul>
+        {% for room in rooms %}
+            <li>
+                <a href="{% url 'chat_room' room.id %}">{{ room.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

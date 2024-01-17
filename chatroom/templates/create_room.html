@@ -1,14 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Create Chat Room</title>
-  </head>
-  <body>
-    <h1>Create a New Chat Room</h1>
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">Create Room</button>
-    </form>
-  </body>
-</html>
+{% extends 'base.html' %}
+{% block title %}Create Chat Room{% endblock %}
+{% block content %}
+  <h1>Create a New Chat Room</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Create Room</button>
+  </form>
+{% endblock %}

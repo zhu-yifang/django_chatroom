@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      {% block title %}
+        Django Chatroom App
+      {% endblock title %}
+    </title>
+    <!-- Add any common CSS files or external stylesheets here -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Example stylesheet link -->
+  </head>
+  <body>
+    <header>
+      <nav>
+        <!-- Navigation Bar -->
+        <ul>
+          <li>
+            <a href="{% url 'chat_room_list' %}">Home</a>
+          </li>
+          {% if user.is_authenticated %}
+            <li>
+              <a href="{% url 'logout' %}">Logout</a>
+            </li>
+          {% else %}
+            <li>
+              <a href="{% url 'login' %}">Login</a>
+            </li>
+            <li>
+              <a href="{% url 'register' %}">Register</a>
+            </li>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+    <main>
+      {% block content %}
+        <!-- Content specific to each page will go here -->
+      {% endblock content %}
+    </main>
+    <footer>
+      <p>&copy; {{ year }} Django Chatroom App</p>
+    </footer>
+    <!-- Add any common JavaScript files or scripts here -->
+    <script src="{% static 'js/script.js' %}"></script> <!-- Example script link -->
+  </body>
+</html>
