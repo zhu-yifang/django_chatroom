@@ -1,0 +1,12 @@
+{% extends 'chatroom/base.html' %}
+{% block title %}
+  Log Out
+{% endblock title %}
+{% block content %}
+  <h2>You have been logged out</h2>
+  <div class="container">
+    <p>
+      Already have an account? <a href="{% url 'login' %}">Login here</a>
+    </p>
+  </div>
+{% endblock content %}
