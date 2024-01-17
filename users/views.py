@@ -9,7 +9,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             auth_login(request, user)  # Log the user in
-            return redirect("home")  # Redirect to a home page or other appropriate page
+            return redirect("chat_room_list")  # Redirect to a home page or other appropriate page
     else:
         form = UserCreationForm()
-    return render(request, "register.html", {"form": form})
+    return render(request, "users/register.html", {"form": form})
