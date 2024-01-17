@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Create Chat Room{% endblock %}
+{% block title %}Create Chat Room{% endblock title %}
 {% block content %}
   <h1>Create a New Chat Room</h1>
   <form method="post">
@@ -7,4 +7,4 @@
     {{ form.as_p }}
     <button type="submit">Create Room</button>
   </form>
-{% endblock %}
+{% endblock content %}
