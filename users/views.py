@@ -12,7 +12,13 @@ def register(request):
             auth_login(request, user)  # Log the user in
             username = form.cleaned_data.get("username")
             messages.success(request, f"Account created for {username}!")
-            return redirect("chat_room_list")  # Redirect to a home page or other appropriate page
+            return redirect(
+                "chat_room_list"
+            )  # Redirect to a home page or other appropriate page
     else:
         form = UserRegisterForm()
     return render(request, "users/register.html", {"form": form})
+
+
+def profile(request):
+    return render(request, "users/profile.html")
