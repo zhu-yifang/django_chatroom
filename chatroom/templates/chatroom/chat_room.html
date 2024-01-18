@@ -1,11 +1,34 @@
 {% extends 'chatroom/base.html' %}
+
 {% block title %}
     {{ room.name }}
 {% endblock title %}
+
 {% block content %}
-    <h1>{{ room.name }}</h1>
-    <ul>
-        {% for message in messages %}<li>{{ message.user.username }}: {{ message.content }}</li>{% endfor %}
-    </ul>
-    <!-- Here you can add a form for posting new messages -->
+    <div class="container mt-4">
+        <h1>{{ room.name }}</h1>
+        
+        <!-- Messages List -->
+        <div class="messages-list mb-4">
+            <ul>
+                {% for message in messages %}
+                    <li>
+                        <strong>{{ message.user.username }}</strong>: {{ message.content }}
+                        <small class="text-muted">{{ message.timestamp }}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <!-- Message Form -->
+        <div class="message-form">
+            <form action="{% url 'post_message' room.id %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <textarea name="message" class="form-control" placeholder="Type a message..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+    </div>
 {% endblock content %}
