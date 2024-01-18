@@ -11,4 +11,4 @@ class ChatRoomForm(forms.ModelForm):
 class MessageForm(forms.ModelForm):
     class Meta:
         model = ChatMessage
-        fields = ["content"]  # Assuming your Message model has a 'content' field
+        fields = ["content"]  # Assuming your ChatMessage model has a 'content' field

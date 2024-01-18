@@ -13,7 +13,9 @@ def chat_room(request, room_id):
     room = ChatRoom.objects.get(id=room_id)
     chat_messages = ChatMessage.objects.filter(room=room).order_by("-timestamp")
     return render(
-        request, "chatroom/chat_room.html", {"room": room, "chat_messages": chat_messages}
+        request,
+        "chatroom/chat_room.html",
+        {"room": room, "chat_messages": chat_messages},
     )
 
 
@@ -37,10 +39,13 @@ def post_message(request, room_id):
             message = form.save(commit=False)
             message.room = room
             message.user = request.user
+            message.content = form.cleaned_data["content"]
             message.save()
             return redirect(
                 "chat_room", room_id=room_id
             )  # Redirect back to the chat room
+        else:
+            print(form.errors)  # Add this line to print form errors
     else:
         form = MessageForm()
     return redirect(
