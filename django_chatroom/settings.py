@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -43,7 +44,6 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap4",
     "debug_toolbar",
-    "daphne",
 ]
 
 MIDDLEWARE = [
