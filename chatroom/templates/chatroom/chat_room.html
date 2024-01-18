@@ -11,10 +11,10 @@
         <!-- Messages List -->
         <div class="messages-list mb-4">
             <ul>
-                {% for message in messages %}
+                {% for chat_message in chat_messages %}
                     <li>
-                        <strong>{{ message.user.username }}</strong>: {{ message.content }}
-                        <small class="text-muted">{{ message.timestamp }}</small>
+                        <strong>{{ chat_message.user.username }}</strong>: {{ chat_message.content }}
+                        <small class="text-muted">{{ chat_message.timestamp }}</small>
                     </li>
                 {% endfor %}
             </ul>
