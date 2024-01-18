@@ -1,6 +1,6 @@
 # Project To-Do List
 
-- [ ] Finish the `create room` functionallity
+- [x] Finish the `create room` functionallity
 - [ ] Finish the `chat` functionallity
 - [ ] Finish the `profile update` functionallity
 - [ ] Writing tests
