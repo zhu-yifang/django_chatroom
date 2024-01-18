@@ -1,5 +1,23 @@
 {% extends "chatroom/base.html" %}
 {% load crispy_forms_tags %}
 {% block content %}
-  <h1>{{ user.username }}</h1>
+  <div class="content-section">
+    {% comment %} Profile picture {% endcomment %}
+    <div class="media">
+      <img class="rounded-circle account-img"
+           src="{{ user.profile.profile_picture.url }}"
+           alt="User Profile Image"
+           height="100"
+           width="100">
+      <div class="media-body">
+        <h2 class="account-heading">{{ user.username }}</h2>
+        <p class="text-secondary">{{ user.email }}</p>
+      </div>
+    </div>
+    {% comment %} Bio {% endcomment %}
+    <div class="bio-section">
+      <h3>Bio</h3>
+      <p>{{ user.profile.bio }}</p>
+    </div>
+  </div>
 {% endblock content %}
