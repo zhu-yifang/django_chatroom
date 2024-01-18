@@ -4,20 +4,38 @@
 {% endblock title %}
 {% block content %}
     <script type="text/javascript">
-        let url = 'ws://${window.location.host}/ws/socket-server/';
+    document.addEventListener('DOMContentLoaded', function () {
+        const roomName = "{{ room.name|escapejs }}";
+        const chatSocket = new WebSocket(
+            'ws://' + window.location.host +
+            '/ws/chat/' + roomName + '/'
+        );
 
-        const chatSocket = new WebSocket(url);
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            document.querySelector('#chat-log').value += (data.message + '\n');
+        };
 
-        chatSocket.onmessage = function(e){
-            let data = JSON.parse(e.data);
-            console.log(data);
-        }
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        document.querySelector('#chat-message-input').focus();
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#chat-message-input');
+            const message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'message': message
+            }));
+            messageInputDom.value = '';
+        };
+    });
     </script>
     <div class="container mt-4">
         <h1>{{ room.name }}</h1>
         <!-- Messages List -->
         <div class="messages-list mb-4">
-            <ul>
+            <ul id="chat-log">
                 {% for chat_message in chat_messages %}
                     <li>
                         <strong>{{ chat_message.user.username }}</strong>: {{ chat_message.content }}
@@ -26,15 +44,13 @@
                 {% endfor %}
             </ul>
         </div>
-        <!-- Message Form -->
+        <!-- Message Input -->
         <div class="message-form">
-            <form action="{% url 'post_message' room.id %}" method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    <textarea name="content" class="form-control" placeholder="Type a message..."></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Send</button>
-            </form>
+            <input id="chat-message-input"
+                   type="text"
+                   class="form-control"
+                   placeholder="Type a message...">
+            <button id="chat-message-submit" class="btn btn-primary">Send</button>
         </div>
     </div>
 {% endblock content %}
