@@ -22,4 +22,4 @@ def create_room(request):
             return redirect("chat_room_list")
     else:
         form = ChatRoomForm()
-    return render(request, "chartroom/create_room.html", {"form": form})
+    return render(request, "chatroom/create_room.html", {"form": form})
