@@ -1,3 +1,6 @@
+# Ignore media files
+media/
+
 # Mac
 .DS_Store
 
