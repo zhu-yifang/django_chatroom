@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "users",
     "crispy_forms",
     "crispy_bootstrap4",
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "django_chatroom.urls"
@@ -135,3 +137,7 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap4"
 
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = "/login/"
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]

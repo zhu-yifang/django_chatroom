@@ -21,6 +21,7 @@ from django.contrib.auth import views as auth_views
 from users import views as user_views
 
 urlpatterns = [
+    path("__debug__/", include("debug_toolbar.urls")),
     path("admin/", admin.site.urls),
     path("", include("chatroom.urls")),
     path(
