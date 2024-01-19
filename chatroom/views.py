@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import ChatRoom, ChatMessage
 from .forms import ChatRoomForm, MessageForm
 from django.contrib.auth.decorators import login_required
@@ -10,7 +10,7 @@ def chat_room_list(request):
 
 
 def chat_room(request, room_id):
-    room = ChatRoom.objects.get(id=room_id)
+    room = get_object_or_404(ChatRoom, id=room_id)
     chat_messages = ChatMessage.objects.filter(room=room).order_by("timestamp")
     return render(
         request,
