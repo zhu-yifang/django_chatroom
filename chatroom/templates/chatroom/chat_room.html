@@ -1,55 +1,11 @@
 {% extends "chatroom/base.html" %}
+{% load static %}
 {% block title %}
     {{ room.name }}
 {% endblock title %}
 {% block content %}
-    <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        // Connect to websocket
-        const chatSocket = new WebSocket(
-            'ws://' + window.location.host +
-            '/ws/chat/' + {{ room.id | escapejs }} + '/'
-        );
-
-        // Receive message from websocket
-        chatSocket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            const chatLog = document.querySelector('#chat-log');
-            const newMessage = document.createElement('li');
-            newMessage.innerHTML = `<strong>${data.username}</strong>: ${data.message} <small class="text-muted">${data.timestamp}</small>`;
-            chatLog.appendChild(newMessage);
-            // Print message to console
-            console.log('message received: ' + data.message);
-        };        
-
-        // Handle errors
-        chatSocket.onclose = function(e) {
-            console.error('Chat socket closed unexpectedly');
-        };
-
-        const messageInputDom = document.querySelector('#chat-message-input');
-        const sendMessage = function() {
-            const message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({'message': message}));
-            console.log('message sent: ' + message);
-            messageInputDom.value = '';
-        };
-
-        // Send message when button is clicked
-        document.querySelector('#chat-message-submit').onclick = function(e) {
-            sendMessage();
-        };
-
-        // Send message when Enter key is pressed
-        messageInputDom.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                e.preventDefault(); // Prevent default Enter key behavior (like submitting a form)
-                sendMessage();
-            }
-        });
-    });
-
-    </script>
+    <div id="chat-data" data-room-id="{{ room.id | escapejs }}" style="display:none;"></div>
+    <script src="{% static 'chatroom/js/chat.js' %}" type="text/javascript"></script>
     <div class="container mt-4">
         <h1>{{ room.name }}</h1>
         <!-- Messages List -->
