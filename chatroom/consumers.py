@@ -19,6 +19,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     # Receive message from WebSocket
     async def receive(self, text_data):
+        # Immediately return if user is not authenticated
+        if not self.scope["user"].is_authenticated:
+            return  # Optionally, you could send an error message back to the user
+
         text_data_json = json.loads(text_data)
         message: str = text_data_json["message"]
 
