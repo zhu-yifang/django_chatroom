@@ -5,16 +5,19 @@
 {% block content %}
     <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function () {
-        const roomName = "{{ room.name|escapejs }}";
         const chatSocket = new WebSocket(
             'ws://' + window.location.host +
-            '/ws/chat/' + roomName + '/'
+            '/ws/chat/' + {{ room.id }} + '/'
         );
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            document.querySelector('#chat-log').value += (data.message + '\n');
-        };
+            const chatLog = document.querySelector('#chat-log');
+            const newMessage = document.createElement('li');
+            newMessage.innerHTML = `<strong>${data.username}</strong>: ${data.message} <small class="text-muted">${data.timestamp}</small>`;
+            chatLog.appendChild(newMessage);
+            console.log('message received: ' + data.message);
+        };        
 
         chatSocket.onclose = function(e) {
             console.error('Chat socket closed unexpectedly');
@@ -27,6 +30,7 @@
             chatSocket.send(JSON.stringify({
                 'message': message
             }));
+            console.log('message sent: ' + message);
             messageInputDom.value = '';
         };
     });
