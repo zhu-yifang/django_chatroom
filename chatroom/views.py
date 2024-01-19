@@ -11,7 +11,7 @@ def chat_room_list(request):
 
 def chat_room(request, room_id):
     room = ChatRoom.objects.get(id=room_id)
-    chat_messages = ChatMessage.objects.filter(room=room).order_by("-timestamp")
+    chat_messages = ChatMessage.objects.filter(room=room).order_by("timestamp")
     return render(
         request,
         "chatroom/chat_room.html",
