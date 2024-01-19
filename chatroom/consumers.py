@@ -20,28 +20,45 @@ class ChatConsumer(AsyncWebsocketConsumer):
     # Receive message from WebSocket
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json["message"]
+        message: str = text_data_json["message"]
 
         # Save the message to the database
-        await self.save_message(message)
+        chat_message: ChatMessage = await self.save_message(message)
 
         # Send message to room group
         await self.channel_layer.group_send(
-            self.room_group_name, {"type": "chat_message", "message": message}
+            self.room_group_name,
+            # This is the event that will be sent to the group
+            {
+                "type": "chat_message",
+                "message": chat_message.content,
+                "username": chat_message.user.username,
+                "timestamp": chat_message.timestamp.strftime(
+                    "%b. %d, %Y, %I:%M %p"
+                ),  # Format timestamp as string
+            },
         )
 
-    # Receive message from room group
-    async def chat_message(self, event):
-        message = event["message"]
-
-        # Send message to WebSocket
-        await self.send(text_data=json.dumps({"message": message}))
-
     @database_sync_to_async
-    def save_message(self, message):
+    def save_message(self, message) -> ChatMessage:
         # Assuming 'user' and 'room' are available in the scope
         user = self.scope["user"]
         room_id = self.scope["url_route"]["kwargs"]["room_id"]
         room = ChatRoom.objects.get(id=room_id)
 
-        ChatMessage.objects.create(user=user, room=room, content=message)
+        return ChatMessage.objects.create(user=user, room=room, content=message)
+
+    # Receive message from room group
+    async def chat_message(self, event):
+        message = event["message"]
+
+        # Send `message`, `username` and `timestamp` to WebSocket
+        await self.send(
+            text_data=json.dumps(
+                {
+                    "message": message,
+                    "username": event["username"],
+                    "timestamp": event["timestamp"],
+                }
+            )
+        )
