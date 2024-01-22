@@ -3,6 +3,7 @@
 - [x] Finish the `create room` functionallity
 - [x] Finish the `chat` functionallity
 - [x] Change the `chat` functionallity to use WebSockets
-- [ ] Finish the `profile update` functionallity
-- [ ] Writing tests
-- [ ] Writing comments for functions and classes
+- [x] Finish the `profile update` functionallity
+- [ ] Use class-based views
+- [ ] Write tests
+- [ ] Write comments for functions and classes
