@@ -7,3 +7,4 @@
 - [ ] Use class-based views
 - [ ] Write tests
 - [ ] Write comments for functions and classes
+- [ ] Send password reset email in the custom domain
