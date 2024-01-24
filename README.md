@@ -8,5 +8,6 @@
 - [ ] Send password reset email in the custom domain
 - [ ] Figure out uid64 and token
 - [ ] Use class-based views
-- [ ] Write tests
+- [x] Write tests
+- [ ] Write more tests
 - [ ] Write comments for functions and classes
