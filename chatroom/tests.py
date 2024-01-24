@@ -10,6 +10,10 @@ from channels.testing import WebsocketCommunicator
 
 
 class ChatRoomViewTest(TestCase):
+    """
+    This class is to test `chatroom.views` module.
+    """
+
     def setUp(self):
         self.client = Client()
         self.user = User.objects.create_user(username="testuser", password="12345")
@@ -57,6 +61,10 @@ class ChatRoomViewTest(TestCase):
 
 
 class ChatConsumerTest(TestCase):
+    """
+    This class is to test `chatroom.consumers` module.
+    """
+
     def setUp(self):
         self.user = User.objects.create_user(username="testuser", password="12345")
 
