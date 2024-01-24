@@ -28,26 +28,3 @@ def create_room(request):
     else:
         form = ChatRoomForm()
     return render(request, "chatroom/create_room.html", {"form": form})
-
-
-@login_required
-def post_message(request, room_id):
-    room = ChatRoom.objects.get(id=room_id)
-    if request.method == "POST":
-        form = MessageForm(request.POST)
-        if form.is_valid():
-            message = form.save(commit=False)
-            message.room = room
-            message.user = request.user
-            message.content = form.cleaned_data["content"]
-            message.save()
-            return redirect(
-                "chat_room", room_id=room_id
-            )  # Redirect back to the chat room
-        else:
-            print(form.errors)  # Add this line to print form errors
-    else:
-        form = MessageForm()
-    return redirect(
-        "chat_room", room_id=room_id
-    )  # Redirect if not a POST request or form is not valid

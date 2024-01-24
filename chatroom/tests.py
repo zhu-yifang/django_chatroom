@@ -33,6 +33,24 @@ class ChatRoomViewTest(TestCase):
         response = self.client.get(reverse("chat_room", args=[9999]))
         self.assertEqual(response.status_code, 404)
 
+    def test_chat_room_list_view(self):
+        response = self.client.get(reverse("chat_room_list"))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "chatroom/chat_room_list.html")
+        self.assertContains(response, "Test Room")
+
+    def test_chat_room_view(self):
+        response = self.client.get(reverse("chat_room", args=[self.room.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "chatroom/chat_room.html")
+        self.assertContains(response, "Hello")
+
+    def test_create_room_view(self):
+        self.client.login(username="testuser", password="12345")
+        response = self.client.post(reverse("create_room"), {"name": "New Room"})
+        self.assertRedirects(response, reverse("chat_room_list"))
+        self.assertTrue(ChatRoom.objects.filter(name="New Room").exists())
+
     def tearDown(self):
         self.room.delete()
         self.user.delete()
