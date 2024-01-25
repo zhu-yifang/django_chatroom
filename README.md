@@ -12,6 +12,7 @@
 - [ ] Write more tests
 - [ ] Write comments for functions and classes
 - [ ] Make it a package for reuse
+- [ ] Learn docker
 
 # Test Coverage Report
 
