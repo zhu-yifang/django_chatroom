@@ -12,6 +12,16 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+from django.core.exceptions import ImproperlyConfigured
+
+
+def get_env_variable(var_name):
+    """Get the environment variable or return exception."""
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = f'Set the {var_name} environment variable'
+        raise ImproperlyConfigured(error_msg)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -99,15 +109,16 @@ CHANNEL_LAYERS = {
 # }
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "chatroom_db",
-        "USER": "chatroom_user",
-        "PASSWORD": "password",
-        "HOST": "localhost",
-        "PORT": "5432",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': get_env_variable('DB_NAME'),  # Your database name
+        'USER': get_env_variable('DB_USER'),  # Default PostgreSQL user
+        'PASSWORD': get_env_variable('DB_PASSWORD'),  # The password you chose
+        'HOST': get_env_variable('DB_HOST'),  # Name of your database service in docker-compose
+        'PORT': get_env_variable('DB_PORT'),  # Default PostgreSQL port
     }
 }
+
 
 
 # Password validation
