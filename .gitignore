@@ -1,3 +1,6 @@
+# PyCharm files
+.idea/
+
 # Example .gitignore entry
 staticfiles/
 
