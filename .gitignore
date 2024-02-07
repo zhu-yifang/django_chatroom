@@ -4,8 +4,6 @@
 # Example .gitignore entry
 staticfiles/
 
-# Ignore media files
-media/
 
 # Mac
 .DS_Store
