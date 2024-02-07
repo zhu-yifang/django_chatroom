@@ -25,6 +25,9 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    volumes:
+      - static_volume:/app/static  # Mount point for static files
+      - media_volume:/app/media    # Mount point for media files
   db:
     image: postgres
     restart: always
@@ -46,3 +49,5 @@ services:
       retries: 5
 volumes:
   db-data:
+  static_volume:  # Define the volume for static files
+  media_volume:   # Define the volume for media files

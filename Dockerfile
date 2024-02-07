@@ -30,6 +30,7 @@ RUN adduser \
     --uid "${UID}" \
     appuser && \
     mkdir -p /app/staticfiles && \
+    mkdir -p /app/media && \
     chown -R appuser:appuser /app
 
 # Install system dependencies
