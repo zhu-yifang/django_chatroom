@@ -28,7 +28,9 @@ RUN adduser \
     --shell "/sbin/nologin" \
     --no-create-home \
     --uid "${UID}" \
-    appuser
+    appuser && \
+    mkdir -p /app/staticfiles && \
+    chown -R appuser:appuser /app
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -56,5 +58,9 @@ COPY . .
 # Expose the port that the application listens on.
 EXPOSE 8000
 
-# Run the application.
-CMD daphne -p 8000 django_chatroom.asgi:application
+# Copy the entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+
+# Set the entrypoint script to be executed
+ENTRYPOINT ["/entrypoint.sh"]
+
