@@ -15,19 +15,12 @@ services:
       - 8000:8000
     env_file:
       - ./.env
-
-    # The commented out section below is an example of how to define a PostgreSQL
-    # database that your application can use. `depends_on` tells Docker Compose to
-    # start the database before your application. The `db-data` volume persists the
-    # database data between container restarts. The `db-password` secret is used
-    # to set the database password. You must create `db/password.txt` and add
-    # a password of your choosing to it before running `docker compose up`.
     depends_on:
       db:
         condition: service_healthy
     volumes:
-      - static_volume:/app/static  # Mount point for static files
-      - media_volume:/app/media    # Mount point for media files
+      - static_volume:/app/static # Mount point for static files
+      - media_volume:/app/media # Mount point for media files
   db:
     image: postgres
     restart: always
@@ -47,7 +40,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
 volumes:
   db-data:
-  static_volume:  # Define the volume for static files
-  media_volume:   # Define the volume for media files
+  static_volume: # Define the volume for static files
+  media_volume: # Define the volume for media files
