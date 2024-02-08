@@ -51,8 +51,10 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 # Copy the source code into the container.
 COPY . .
 
-# Change the ownership of `media` to `appuser`
-RUN chown -R appuser:appuser /app/media 
+# Change the ownership of `media` and `staticfiles` to `appuser`
+RUN chown -R appuser:appuser /app/media
+# Create the staticfiles directory and adjust permissions
+RUN mkdir -p /app/staticfiles && chown -R appuser:appuser /app/staticfiles
 
 # Switch to the non-privileged user to run the application.
 USER appuser

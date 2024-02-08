@@ -19,7 +19,7 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - static_volume:/app/static # Mount point for static files
+      - static_volume:/app/staticfiles # Mount point for static files
       - media_volume:/app/media # Mount point for media files
   db:
     image: postgres
@@ -40,6 +40,16 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80" # Map Nginx to port 80 on the host
+    volumes:
+      - static_volume:/usr/share/nginx/html/staticfiles # Serve static files from here
+      - media_volume:/usr/share/nginx/html/media # Serve media files from here
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro # Use custom Nginx config
+    depends_on:
+      - django_app
 
 volumes:
   db-data:
