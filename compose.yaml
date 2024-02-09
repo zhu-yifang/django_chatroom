@@ -27,7 +27,7 @@ services:
     image: postgres
     restart: always
     user: postgres
-    # expose a port to the host machine for debugging
+    # Expose a port to the host machine for debugging
     # ports:
     #   - 5432:5432
     volumes:
@@ -55,6 +55,9 @@ services:
   redis:
     image: redis:alpine
     restart: always
+    # Expose a port to the host machine for debugging
+    # ports:
+    #   - 6379:6379
 
 volumes:
   db-data:

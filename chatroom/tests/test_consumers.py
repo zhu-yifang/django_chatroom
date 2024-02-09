@@ -1,13 +1,12 @@
-from django.test import TestCase
 from django.contrib.auth.models import User
 from django.urls import re_path
 from chatroom.consumers import ChatConsumer
 from chatroom.models import ChatRoom
 from channels.routing import URLRouter
-from channels.testing import WebsocketCommunicator
+from channels.testing import WebsocketCommunicator, ChannelsLiveServerTestCase
 
 
-class ChatConsumerTest(TestCase):
+class ChatConsumerTest(ChannelsLiveServerTestCase):
     """
     This class is to test `chatroom.consumers` module.
     """
@@ -26,21 +25,31 @@ class ChatConsumerTest(TestCase):
         )
 
     async def test_chat_consumer(self):
+        # Path to your consumer
         communicator = WebsocketCommunicator(
-            self.application, f"/ws/chat/{self.room_id}/"
+            application=self.application, path=f"/ws/chat/{self.room_id}/"
         )
+        # Force authentication
         communicator.scope["user"] = self.user
-        connected, _ = await communicator.connect()
-        assert connected
 
-        message = "Hello, world!"
-        await communicator.send_json_to({"message": message})
+        # Connect to the WebSocket
+        connected, subprotocol = await communicator.connect()
+        self.assertTrue(connected)
 
+        # Prepare a message
+        message = {"message": "Hello, world!"}
+        await communicator.send_json_to(message)
+
+        # Receive and assert the response
         response = await communicator.receive_json_from()
-        assert response["message"] == message
-        assert response["username"] == self.user.username
+        self.assertEqual(response["message"], "Hello, world!")
+        self.assertEqual(response["username"], self.user.username)
+        # You might need to adjust the timestamp format based on how it's implemented in your consumer
+        # self.assertEqual(response["timestamp"], expected_timestamp)
 
+        # Clean up
         await communicator.disconnect()
 
-    def tearDown(self):
-        self.user.delete()
+    async def tearDown(self):
+        await self.user.delete()
+        await self.room.delete()
