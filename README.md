@@ -17,6 +17,7 @@
 - [ ] Regenerate the secret key
 - [ ] Use HTTPS
 - [ ] Have a `favicon.ico` for the website
+- [ ] Do some research on GitHub Actions and implement it
 
 # Test Coverage Report
 
