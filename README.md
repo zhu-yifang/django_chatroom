@@ -10,10 +10,13 @@
 - [ ] Use class-based views
 - [x] Write tests
 - [ ] Write more tests
+  - [ ] Write tests for password reset
 - [ ] Write comments for functions and classes
 - [ ] Make it a package for reuse
 - [x] Learn docker
 - [ ] Regenerate the secret key
+- [ ] Use HTTPS
+- [ ] Have a `favicon.ico` for the website
 
 # Test Coverage Report
 
