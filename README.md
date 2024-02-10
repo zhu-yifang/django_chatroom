@@ -13,7 +13,7 @@
 - [ ] Write comments for functions and classes
 - [ ] Make it a package for reuse
 - [x] Learn docker
-- [ ] Regenerate the secret key
+- [x] Regenerate the secret key
 
 # Test Coverage Report
 
