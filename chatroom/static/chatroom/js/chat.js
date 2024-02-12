@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const roomId = document.getElementById('chat-data').dataset.roomId;
     // Connect to websocket
     const chatSocket = new WebSocket(
-        'ws://' + window.location.host + '/ws/chat/' + roomId + '/'
+        'wss://' + window.location.host + '/ws/chat/' + roomId + '/'
     );
     // Receive message from websocket
     chatSocket.onmessage = function (e) {
