@@ -20,8 +20,9 @@ def get_env_variable(var_name):
     try:
         return os.environ[var_name]
     except KeyError:
-        error_msg = f'Set the {var_name} environment variable'
+        error_msg = f"Set the {var_name} environment variable"
         raise ImproperlyConfigured(error_msg)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -36,7 +37,11 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG_VALUE", "False") == "True"
 
-ALLOWED_HOSTS = ["localhost", "www.zhuyifang.net", "zhuyifang.net", ]
+ALLOWED_HOSTS = [
+    "localhost",
+    "www.zhuyifang.net",
+    "zhuyifang.net",
+]
 
 
 # Application definition
@@ -109,16 +114,17 @@ CHANNEL_LAYERS = {
 # }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': get_env_variable('DB_NAME'),  # Your database name
-        'USER': get_env_variable('DB_USER'),  # Default PostgreSQL user
-        'PASSWORD': get_env_variable('DB_PASSWORD'),  # The password you chose
-        'HOST': get_env_variable('DB_HOST'),  # Name of your database service in docker-compose
-        'PORT': get_env_variable('DB_PORT'),  # Default PostgreSQL port
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": get_env_variable("DB_NAME"),  # Your database name
+        "USER": get_env_variable("DB_USER"),  # Default PostgreSQL user
+        "PASSWORD": get_env_variable("DB_PASSWORD"),  # The password you chose
+        "HOST": get_env_variable(
+            "DB_HOST"
+        ),  # Name of your database service in docker-compose
+        "PORT": get_env_variable("DB_PORT"),  # Default PostgreSQL port
     }
 }
-
 
 
 # Password validation
@@ -186,4 +192,11 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASS")
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = ["localhost", "www.zhuyifang.net", "zhuyifang.net", ]
+CSRF_TRUSTED_ORIGINS = [
+    "https://localhost",
+    "http://localhost",
+    "https://www.zhuyifang.net",
+    "http://www.zhuyifang.net",
+    "https://zhuyifang.net",
+    "http://zhuyifang.net",
+]
