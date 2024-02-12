@@ -186,3 +186,4 @@ EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASS")
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+CSRF_TRUSTED_ORIGINS = ["localhost", "www.zhuyifang.net", "zhuyifang.net", ]
